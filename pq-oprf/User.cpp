@@ -4,9 +4,9 @@
 /*
 *Constructs new User with session id sid that connects to  T io. T is the type of the IO Channel.
 */
-User::User(int sid, int port){
+User::User(int sid, char* ip_address, int port){
     this->sid = sid;
-    io = new NetIO("127.0.0.1", port);
+    io = new NetIO(ip_address, port);
 }
 
 User::~User(){
@@ -98,10 +98,10 @@ void appendArrayToString(string& out, double* a, int len) {
     out += "]\n";
 }
 
-void measureRuntime(int sid, int port, const string& password, string& output_text, int numIterations){
+void measureRuntime(int sid, char* ip_address, int port, const string& password, string& output_text, int numIterations){
     double time_stamps[numIterations];
     //Setup everything
-    User u(sid, port);
+    User u(sid, ip_address, port);
     int ssid = 1;
     u.cf = new CircuitFile(circuit_filename.c_str());
 
@@ -150,7 +150,9 @@ int main(int argc, char* argv[]){
         int sid = atoi(argv[1]);
         //Parse arguments
         string pwd(argv[2]);
-        int port = atoi(argv[3]);
+        char* ip_address = argv[3];
+        int port = atoi(argv[4]);
+        cout << "This is the ip address: " << ip_address << endl;
 
         int numIterations = 3;
         //write measurements to a file
@@ -166,7 +168,7 @@ int main(int argc, char* argv[]){
         output_text += "-------------------------\n";
         output_text += "Measured time for each run:\n";
 
-        measureRuntime(sid, port, pwd, output_text, numIterations);
+        measureRuntime(sid, ip_address, port, pwd, output_text, numIterations);
 
         string filename = "pq_gcoprf_benchmark_results_";
         strftime(time_now, 9, "%H_%M", &tm);
