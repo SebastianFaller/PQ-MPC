@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/server_pq-oprf.dir/Server.cpp.o -o ../bin/server_pq-oprf  ../emp-tool/libemp-tool.a ../pq-ot/libpq-ot.a ../pq-yao/libpq-yao.a ../pq-ot/libpq-ot.a ../emp-tool/libemp-tool.a /usr/lib/x86_64-linux-gnu/libgmp.so /usr/lib/x86_64-linux-gnu/libgmpxx.so /usr/local/lib/libseal.a 

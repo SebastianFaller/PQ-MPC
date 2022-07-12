@@ -32,6 +32,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_subdirectory(emp-tool)
 add_subdirectory(pq-ot)
 add_subdirectory(pq-yao)
+add_subdirectory(pq-oprf)
 
 if (BUILD_TESTS)
     add_subdirectory(test)

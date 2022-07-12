@@ -1,0 +1,7 @@
+GC-OPRF benchmark from 2022-07-05 at 15:18:28 with n = 3 iterations:
+User input: abc
+-------------------------
+Measured time for each run:
+[271.325525, 200.743288, 51.442920]
+Average Time [ms]: 174.503911
+Standard Deviation [ms]: 91.664128

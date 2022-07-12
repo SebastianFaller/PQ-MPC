@@ -169,6 +169,14 @@ inline const Bit &Integer::operator[](int index) const {
 }
 
 template<>
+inline bool* Integer::reveal<bool*>(int party) const {
+	bool * b = new bool[length];
+    for(int i = 0; i < length; i++)
+        ProtocolExecution::prot_exec->reveal(b + i, party, &(bits[i].bit0), 1); 
+	return b;
+}
+
+template<>
 inline string Integer::reveal<string>(int party) const {
 	bool * b = new bool[length];
     for(int i = 0; i < length; i++)

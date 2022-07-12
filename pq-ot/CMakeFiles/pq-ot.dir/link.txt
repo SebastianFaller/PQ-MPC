@@ -1,0 +1,2 @@
+/usr/bin/ar qc libpq-ot.a CMakeFiles/pq-ot.dir/pq-ot.cpp.o CMakeFiles/pq-ot.dir/pq-otmain.cpp.o
+/usr/bin/ranlib libpq-ot.a
