@@ -1,2 +1,0 @@
-/usr/bin/ar qc libpq-yao.a CMakeFiles/pq-yao.dir/garble-gates.cpp.o
-/usr/bin/ranlib libpq-yao.a
