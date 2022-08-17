@@ -154,7 +154,7 @@ int main(int argc, char* argv[]){
         int port = atoi(argv[4]);
         cout << "This is the ip address: " << ip_address << endl;
 
-        int numIterations = 3;
+        int numIterations = 1000;
         //write measurements to a file
         string output_text = "";
         auto t = std::time(nullptr);

@@ -47,6 +47,7 @@ void Server::serverCmplt(const int ssid){
 
     //TODO check if the server really needs to call this; Maybe just the user
     c.reveal<bool*>(BOB);
+    io->flush();
 }
 
 int main(int argc, char* argv[]){
@@ -62,13 +63,14 @@ int main(int argc, char* argv[]){
         int ssid = 1;
         s.cf = new CircuitFile(circuit_filename.c_str());
         cout << "Circuit file found" << endl;
-        int numIterations = 3;
+        int numIterations = 1000;
         //Actual evaluation            
         for(int i = 0; i < numIterations;++i){
             setup_semi_honest(s.io, ALICE, AES_INPUT_SIZE + AES_KEY_SIZE);
             s.serverCmplt(ssid);
+	    cout << "Server completed one" << endl;    
         }
-        cout << "Server complete" << endl;    
+        cout << "Server executed all" << endl;    
     }
 
 }
