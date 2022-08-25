@@ -4,9 +4,9 @@
 /*
 *Constructs new User with session id sid that connects to  T io. T is the type of the IO Channel.
 */
-User::User(int sid, char* ip_address, int port){
+User::User(int sid, NetIO* netio){
     this->sid = sid;
-    io = new NetIO(ip_address, port);
+    io = netio;
 }
 
 User::~User(){
@@ -98,14 +98,18 @@ void appendArrayToString(string& out, double* a, int len) {
     out += "]\n";
 }
 
+
+
 void measureRuntime(int sid, char* ip_address, int port, const string& password, string& output_text, int numIterations){
     double time_stamps[numIterations];
     //Setup everything
-    User u(sid, ip_address, port);
+    NetIO* netio = new NetIO(ip_address, port);
+    User u(sid, netio);
     int ssid = 1;
     u.cf = new CircuitFile(circuit_filename.c_str());
+    int total_comm = 0;
 
-        for(int i = 0; i < numIterations; ++i){
+    for(int i = 0; i < numIterations; ++i){
 
         setup_semi_honest(u.io, BOB, AES_INPUT_SIZE + AES_KEY_SIZE);
         
@@ -119,6 +123,11 @@ void measureRuntime(int sid, char* ip_address, int port, const string& password,
 
         std::cout << "Elapsed time: " << elapsed.count() << " s\n";
         time_stamps[i] = elapsed.count()*1000; // miliseconds
+
+
+        // Remember the total communication after one round
+        if (i == 0)
+            total_comm = netio->get_total_comm();
 
         //Print result
         cout << std::dec << "THIS IS ROUND " << (i+1) << endl;
@@ -140,6 +149,7 @@ void measureRuntime(int sid, char* ip_address, int port, const string& password,
     variance /= numIterations;
     double standard_deviation = sqrt(variance);
     output_text += "Standard Deviation [ms]: " + to_string(standard_deviation) + "\n";
+    output_text += ("Measured Traffic total[Bytes]: " + to_string(total_comm) + "\n");
 
 }
 
@@ -154,7 +164,7 @@ int main(int argc, char* argv[]){
         int port = atoi(argv[4]);
         cout << "This is the ip address: " << ip_address << endl;
 
-        int numIterations = 1000;
+        int numIterations = 1;
         //write measurements to a file
         string output_text = "";
         auto t = std::time(nullptr);
@@ -169,7 +179,6 @@ int main(int argc, char* argv[]){
         output_text += "Measured time for each run:\n";
 
         measureRuntime(sid, ip_address, port, pwd, output_text, numIterations);
-
         string filename = "pq_gcoprf_benchmark_results_";
         strftime(time_now, 9, "%H_%M", &tm);
         filename += string(today) + "_";

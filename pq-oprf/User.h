@@ -26,7 +26,7 @@ class User{
     /*
     *Constructs new User with session id sid that connects to  T io. T is the type of the IO Channel.
     */
-    User(int sid, char* ip_address, int port);
+    User(int sid, NetIO* netio);
     ~User();
 
     // Calculates an array of 256 bools from an array of 32 bytes
